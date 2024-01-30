@@ -83,5 +83,13 @@ public class ProductCreditControllers {
 			return productoService.delete(s).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
 		}).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NO_CONTENT));
 	}
+	
+	//==============================
+		
+	@GetMapping("/dni/{dni}")
+	public Flux<ProductCredit> productosCreditoCliente(@PathVariable String dni) {
+		Flux<ProductCredit> credito = productoService.productoCreditoCliente(dni);
+		return credito;
+	}
 
 }

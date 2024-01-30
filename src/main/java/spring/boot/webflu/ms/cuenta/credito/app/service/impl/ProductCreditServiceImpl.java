@@ -34,7 +34,12 @@ public class ProductCreditServiceImpl implements ProductCreditService {
 	public Mono<Void> delete(ProductCredit prod) {		
 		return productoDao.delete(prod);
 	}
-	
+
 	//----------------------------------------------------------------
 
+	@Override
+	public Flux<ProductCredit> productoCreditoCliente(String dni) {
+		return productoDao.findByDni(dni);
+	}
+	
 }
