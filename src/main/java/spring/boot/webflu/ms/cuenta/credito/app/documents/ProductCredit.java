@@ -20,8 +20,7 @@ public class ProductCredit {
 	@NotEmpty
 	private String id;
 	
-	@NotEmpty
-	@Field(name="numero_cuenta")
+	@NotEmpty	
 	private String numeroCuenta;
 
 	@NotEmpty

@@ -9,5 +9,9 @@ public interface ProductCreditService {
 	Mono<ProductCredit> findByIdProducto(String id);
 	Mono<ProductCredit> saveProductoCredito(ProductCredit clientePersonal); //saveProducto
 	Mono<Void> delete(ProductCredit prod); //deleteProducto
+	
+	//------------------------------------------------------------
+	
+	Flux<ProductCredit> productoCreditoCliente(String dni); //listarProductoCreditoCliente
 		
 }
