@@ -56,6 +56,7 @@ public class ProductCreditControllers {
 	//REGISTRAR UN PRODUCTO DE CREDITO	
 	@PostMapping
 	public Mono<ProductCredit> registrarProductoCredito(@RequestBody ProductCredit pro) {
+		
 		// BUSCA SI EL TIPO DE CREDITO EXISTE
 		Mono<TypeCreditProduct> tipo = tipoProductoService.findByIdTipoProducto(pro.getTipoProducto().getId());
 		return tipo.defaultIfEmpty(new TypeCreditProduct()).flatMap(c -> {
@@ -90,6 +91,16 @@ public class ProductCreditControllers {
 	public Flux<ProductCredit> productosCreditoCliente(@PathVariable String dni) {
 		Flux<ProductCredit> credito = productoService.productoCreditoCliente(dni);
 		return credito;
+	}
+	
+	@PutMapping("/consumo/{monto}/{numero_cuenta}/{codigo_bancario}")
+	public Mono<ProductCredit> retiroCredito(@PathVariable Double monto,@PathVariable String numero_cuenta,@PathVariable String codigo_bancario) {
+			return productoService.consumosCredito(monto, numero_cuenta,codigo_bancario);
+	}
+	
+	@PutMapping("/pago/{numero_cuenta}/{monto}/{codigo_bancario}")
+	public Mono<ProductCredit> despositoCredito(@PathVariable Double monto,@PathVariable String numero_cuenta,@PathVariable String codigo_bancario) {		
+			return productoService.pagosCredito(monto, numero_cuenta,codigo_bancario);
 	}
 
 }
