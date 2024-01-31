@@ -37,21 +37,21 @@ public class SpringBootWebfluMsCuentaCreditoApplication implements CommandLineRu
 		mongoTemplate.dropCollection("ProductCredit").subscribe();
 		mongoTemplate.dropCollection("TypeCreditProduct").subscribe();
 		
-		TypeCreditProduct personal = new TypeCreditProduct("1","personal");
-		TypeCreditProduct empresarial = new TypeCreditProduct("2","empresarial");
+		TypeCreditProduct creditoPersonal = new TypeCreditProduct("1","creditoPersonal");
+		TypeCreditProduct creditoEmpresarial = new TypeCreditProduct("2","creditoEmpresarial");
 		TypeCreditProduct tarjetaCreditoPersonal = new TypeCreditProduct("3","tarjetaCreditoPersonal");
 		TypeCreditProduct tarjetaCreditoEmpresarial = new TypeCreditProduct("4","tarjetaCreditoEmpresarial");
 		
 		
 		//
-		Flux.just(personal,empresarial,tarjetaCreditoPersonal,tarjetaCreditoEmpresarial)
+		Flux.just(creditoPersonal,creditoEmpresarial,tarjetaCreditoPersonal,tarjetaCreditoEmpresarial)
 		.flatMap(serviceTipoCredito::saveTipoProducto)
 		.doOnNext(c -> {
 			log.info("Tipo de producto creado: " +  c.getDescripcion() + ", Id: " + c.getId());
 		}).thenMany(					
 				Flux.just(
-						new ProductCredit("100001","47305710",personal,5000.0,5000.0,0.0,"bcp"),
-						new ProductCredit("100002","47305711",empresarial,2000.0,2000.0,.0,"bcp"),
+						new ProductCredit("100001","47305710",creditoPersonal,5000.0,5000.0,0.0,"bcp"),
+						new ProductCredit("100002","47305711",creditoEmpresarial,2000.0,2000.0,.0,"bcp"),
 						new ProductCredit("100003","47305712",tarjetaCreditoPersonal,5000.0,4000.0,1000.0,"bcp"),
 						new ProductCredit("100004","47305713",tarjetaCreditoEmpresarial,6000.0,1500.0,3500.0,"bbva")						
 						
