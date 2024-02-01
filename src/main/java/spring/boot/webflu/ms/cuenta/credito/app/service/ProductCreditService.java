@@ -15,4 +15,8 @@ public interface ProductCreditService {
 	Flux<ProductCredit> productoCreditoCliente(String dni); //listarProductoCreditoCliente
 	Mono<ProductCredit> consumosCredito(Double monto, String numero_cuenta, String codigo_bancario);//consumos
 	Mono<ProductCredit> pagosCredito(Double monto, String numero_cuenta, String codigo_bancario);//pagos
+	Flux<ProductCredit> cuentaSinConsumo(String dni);
+	Mono<ProductCredit> productosCredito(String numero_cuenta, String codigo_bancario);
+	
+	
 }

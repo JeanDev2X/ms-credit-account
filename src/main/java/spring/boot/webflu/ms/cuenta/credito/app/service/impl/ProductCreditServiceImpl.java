@@ -103,4 +103,14 @@ public class ProductCreditServiceImpl implements ProductCreditService {
 		});
 	}
 
+	@Override
+	public Flux<ProductCredit> cuentaSinConsumo(String dni) {
+		return productoDao.verDeudaCredito(dni);
+	}
+
+	@Override
+	public Mono<ProductCredit> productosCredito(String numero_cuenta, String codigo_bancario) {
+		return productoDao.findByNumeroCuentaAndCodigoBanco(numero_cuenta, codigo_bancario);
+	}
+
 }
