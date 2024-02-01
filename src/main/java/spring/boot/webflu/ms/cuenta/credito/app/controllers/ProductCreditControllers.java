@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import spring.boot.webflu.ms.cuenta.credito.app.documents.ProductCredit;
 import spring.boot.webflu.ms.cuenta.credito.app.documents.TypeCreditProduct;
+import spring.boot.webflu.ms.cuenta.credito.app.dto.CuentaCreditoDto;
 import spring.boot.webflu.ms.cuenta.credito.app.service.ProductCreditService;
 import spring.boot.webflu.ms.cuenta.credito.app.service.TypeCreditProductService;
 
@@ -102,5 +103,45 @@ public class ProductCreditControllers {
 	public Mono<ProductCredit> despositoCredito(@PathVariable Double monto,@PathVariable String numero_cuenta,@PathVariable String codigo_bancario) {		
 			return productoService.pagosCredito(monto, numero_cuenta,codigo_bancario);
 	}
+	
+	//CUENTAS SIN DEUDA
+	@GetMapping("/dniSinDeuda/{dni}")
+	public Flux<ProductCredit> cuentasSinDeuda(@PathVariable String dni) {
+			Flux<ProductCredit> credito = productoService.cuentaSinConsumo(dni);
+			//TODO : Implementar mensaje si no tiene deuda
+			return credito;
 
+	}
+	
+	//MUESTRA LA CUENTA BANCARIA CON EL NUMERO DE CUENTA
+	@GetMapping("/numero_cuenta/{numero_cuenta}/{codigo_bancario}")
+	public Mono<ProductCredit> cuentaBancariaCredito(@PathVariable String numero_cuenta, @PathVariable String codigo_bancario) {
+		Mono<ProductCredit> credito = productoService.productosCredito(numero_cuenta, codigo_bancario);
+		return credito;
+	}
+	
+	//MUESTRA LOS SALDOS - POR NUMERO DE CUENTA
+	@GetMapping("/saldoDisponible/{numero_cuenta}/{codigo_bancario}")
+	public Mono<CuentaCreditoDto> saldosCredito(@PathVariable String numero_cuenta, @PathVariable String codigo_bancario) {
+		
+		//TODO : Adaptar a tarjetas de credito
+		Mono<ProductCredit> operacion = productoService.productosCredito(numero_cuenta, codigo_bancario);
+
+		return operacion.flatMap(c -> {
+
+			CuentaCreditoDto cd = new CuentaCreditoDto();
+			
+				cd.setDni(c.getDni());
+				cd.setNumeroCuenta(c.getNumeroCuenta());
+				cd.setSaldo(c.getSaldo());
+		
+				cd.setConsumo(c.getConsumo());
+				cd.setCredito(c.getCredito());
+			
+			return Mono.just(cd);
+		});
+
+	}
+	
+	
 }

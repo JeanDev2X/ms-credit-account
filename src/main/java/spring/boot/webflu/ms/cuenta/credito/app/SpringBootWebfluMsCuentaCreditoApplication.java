@@ -51,7 +51,7 @@ public class SpringBootWebfluMsCuentaCreditoApplication implements CommandLineRu
 		}).thenMany(					
 				Flux.just(
 						new ProductCredit("100001","47305710",creditoPersonal,5000.0,5000.0,0.0,"bcp"),
-						new ProductCredit("100002","47305711",creditoEmpresarial,2000.0,2000.0,.0,"bcp"),
+						new ProductCredit("100002","47305711",creditoEmpresarial,2000.0,2000.0,0.0,"bcp"),
 						new ProductCredit("100003","47305712",tarjetaCreditoPersonal,5000.0,4000.0,1000.0,"bcp"),
 						new ProductCredit("100004","47305713",tarjetaCreditoEmpresarial,6000.0,1500.0,3500.0,"bbva")						
 						
