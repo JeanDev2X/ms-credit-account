@@ -50,10 +50,12 @@ public class SpringBootWebfluMsCuentaCreditoApplication implements CommandLineRu
 			log.info("Tipo de producto creado: " +  c.getDescripcion() + ", Id: " + c.getId());
 		}).thenMany(					
 				Flux.just(
-						new ProductCredit("100001","47305710",creditoPersonal,5000.0,5000.0,0.0,"bcp"),
-						new ProductCredit("100002","47305711",creditoEmpresarial,2000.0,2000.0,0.0,"bcp"),
-						new ProductCredit("100003","47305712",tarjetaCreditoPersonal,5000.0,4000.0,1000.0,"bcp"),
-						new ProductCredit("100004","47305713",tarjetaCreditoEmpresarial,6000.0,1500.0,3500.0,"bbva")						
+						new ProductCredit("47305710","450001","9057880460332731",creditoPersonal,5000.0,5000.0,0.0,"bcp"),
+						new ProductCredit("47305711","450002","9057880460332833",creditoEmpresarial,2000.0,2000.0,0.0,"bcp"),
+						new ProductCredit("47305712","450003","9057880460330004",tarjetaCreditoPersonal,5000.0,4000.0,1000.0,"bcp"),
+						new ProductCredit("47305713","450004","9057880460334500",tarjetaCreditoEmpresarial,6000.0,1500.0,4500.0,"bcp"),
+						new ProductCredit("99091450","450077","9057880460334577",tarjetaCreditoEmpresarial,4000.0,4000.0,0.0,"bcp"),
+						new ProductCredit("99091440","450088","9057880460334590",tarjetaCreditoEmpresarial,5000.0,1800.0,3200.0,"bcp")
 						
 						)					
 					.flatMap(procredito -> {

@@ -54,7 +54,10 @@ public class ProductCreditControllers {
 		return productoService.saveProductoCredito(producto);
 	}
 
-	//REGISTRAR UN PRODUCTO DE CREDITO	
+	//REGISTRAR UN PRODUCTO DE CREDITO
+	/*
+		Un cliente puede tener un producto de crédito sin la obligación de tener una cuenta bancaria en la institución.
+	*/
 	@PostMapping
 	public Mono<ProductCredit> registrarProductoCredito(@RequestBody ProductCredit pro) {
 		
@@ -94,11 +97,14 @@ public class ProductCreditControllers {
 		return credito;
 	}
 	
+	//consumir tarjeta de credito
+	//Un cliente puede cargar consumos a sus tarjetas de crédito en base a su límite de crédito
 	@PutMapping("/consumo/{monto}/{numero_cuenta}/{codigo_bancario}")
 	public Mono<ProductCredit> retiroCredito(@PathVariable Double monto,@PathVariable String numero_cuenta,@PathVariable String codigo_bancario) {
 			return productoService.consumosCredito(monto, numero_cuenta,codigo_bancario);
 	}
 	
+	//Pago de credito
 	@PutMapping("/pago/{numero_cuenta}/{monto}/{codigo_bancario}")
 	public Mono<ProductCredit> despositoCredito(@PathVariable Double monto,@PathVariable String numero_cuenta,@PathVariable String codigo_bancario) {		
 			return productoService.pagosCredito(monto, numero_cuenta,codigo_bancario);

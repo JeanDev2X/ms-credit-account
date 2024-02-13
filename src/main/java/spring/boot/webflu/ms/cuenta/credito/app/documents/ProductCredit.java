@@ -20,12 +20,15 @@ public class ProductCredit {
 	@NotEmpty
 	private String id;
 	
-	@NotEmpty	
-	private String numeroCuenta;
-
 	@NotEmpty
 	private String dni;
 	
+	@NotEmpty	
+	private String numeroCuenta;//DEBE DE SER UNICO
+	
+	@NotEmpty
+	private String numeroTarjeta;//DEBE DE SER UNICO
+
 	@NotEmpty
 	private TypeCreditProduct tipoProducto;
 	
@@ -51,10 +54,11 @@ public class ProductCredit {
 	
 	}
 
-	public ProductCredit(String numeroCuenta,String dni,TypeCreditProduct tipoProducto,
+	public ProductCredit(String dni,String numeroCuenta,String numeroTarjeta,TypeCreditProduct tipoProducto,
 			Double credito,Double saldo, Double consumo,String codigoBanco) {
-		this.numeroCuenta = numeroCuenta;
 		this.dni = dni;
+		this.numeroCuenta = numeroCuenta;
+		this.numeroTarjeta = numeroTarjeta;		
 		this.tipoProducto = tipoProducto;
 		this.credito = credito;
 		this.saldo = saldo;
