@@ -39,7 +39,14 @@ public class ProductCreditServiceImpl implements ProductCreditService {
 
 	@Override
 	public Flux<ProductCredit> productoCreditoCliente(String dni) {
-		return productoDao.findByDni(dni);
+		
+		//Si me devulve null o vacio		
+		//cunado me devuelve con data
+		
+		Flux<ProductCredit> productCreditFlux = productoDao.findByDni(dni);
+	    return productCreditFlux != null ? productCreditFlux : Flux.empty();
+		
+		
 	}
 
 	@Override
@@ -49,26 +56,22 @@ public class ProductCreditServiceImpl implements ProductCreditService {
 
 			System.out.println("Objeto credito -->>>" + c.toString());
 			System.out.println("Monto -->>>>" + monto);
-
-			if (c.getSaldo() > c.getCredito()) {
-				c.setSaldo((c.getSaldo() - monto));
-				return productoDao.save(c);
-			} else {
-
-				System.out.println("Monto : " + monto);
-				System.out.println("Saldo : " + c.getSaldo());
-
+						
+			if (c.getCredito() >= c.getSaldo()) {
+						
 				if (monto <= c.getSaldo()) {
 					c.setSaldo((c.getSaldo() - monto));
 					c.setConsumo(c.getConsumo() + monto);
 					return productoDao.save(c);
 				} else {
-					return Mono.empty();
-					// return Mono.error(new InterruptedException("SALDO INSUFICIENTE :
-					// "+c.getSaldo() ));
+					//return Mono.empty();
+					return Mono.error(new InterruptedException("SALDO INSUFICIENTE :"+c.getSaldo() ));
 					// throw new RequestException("SALDO INSUFICIENTE");
 				}
+				
+			} else {
 
+				return Mono.empty();
 			}
 
 		});
